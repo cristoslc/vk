@@ -7,3 +7,6 @@ dist/
 build/
 .vk-config.json
 .vk-cache.json
+.env
+.DS_Store
+node_modules/
