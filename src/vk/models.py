@@ -90,7 +90,7 @@ class View:
     id: int
     title: str
     project_id: int = 0
-    view_kind: int = 0  # 0=list, 1=gantt, 2=table, 3=kanban
+    view_kind: str = "list"  # list, gantt, table, kanban
     default_bucket_id: int = 0
     done_bucket_id: int = 0
 
@@ -100,7 +100,7 @@ class View:
             id=data.get("id", 0),
             title=data.get("title", ""),
             project_id=data.get("project_id", 0),
-            view_kind=data.get("view_kind", 0),
+            view_kind=data.get("view_kind", "list"),
             default_bucket_id=data.get("default_bucket_id", 0),
             done_bucket_id=data.get("done_bucket_id", 0),
         )

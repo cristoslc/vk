@@ -21,9 +21,9 @@ class BucketService:
             for v in views:
                 if v.title.lower() == view_name.lower():
                     return v
-        # Default: first kanban view (view_kind=3)
+        # Default: first kanban view
         for v in views:
-            if v.view_kind == 3:
+            if v.view_kind == "kanban":
                 return v
         raise ValueError(f"No kanban view found for project {project_id}")
 

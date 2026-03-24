@@ -20,9 +20,11 @@ class AttachmentService:
 
     def add(self, task_id: int, file_path: str) -> Attachment:
         data = self.client.upload(f"/tasks/{task_id}/attachments", file_path)
-        # Upload response wraps in {"success": ..., ...}
+        # Upload response wraps in {"success": [<attachment>, ...]}
         if isinstance(data, dict) and "success" in data:
-            return Attachment.from_api(data.get("success", data))
+            items = data["success"]
+            if isinstance(items, list) and items:
+                return Attachment.from_api(items[0])
         return Attachment.from_api(data)
 
     def get(

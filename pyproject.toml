@@ -18,6 +18,12 @@ dev = [
     "responses>=0.25",
 ]
 
+[tool.pytest.ini_options]
+markers = [
+    "integration: tests that hit a live Vikunja instance (skipped by default)",
+]
+addopts = "-m 'not integration'"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

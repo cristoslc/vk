@@ -106,7 +106,7 @@ class TestSearchCommand:
     def test_search(self, runner: CliRunner) -> None:
         responses.add(
             responses.GET,
-            f"{BASE_URL}/api/v1/tasks/all",
+            f"{BASE_URL}/api/v1/tasks",
             json=[{"id": 10, "title": "Electric bill", "project_id": 1}],
         )
         result = runner.invoke(
