@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.0-alpha.2] - 2026-03-24
+
+### Features
+
+#### Integration-tested API client
+
+Running against a live Vikunja v2.2.0 instance revealed and fixed three bugs: search used a non-existent endpoint (`/tasks/all` → `/tasks`), attachment uploads returned a list not parsed correctly, and `view_kind` is a string (`"kanban"`) not an integer. 15 integration tests now cover auth, projects, tasks, labels, comments, search, buckets, and attachments.
+
+### Research
+- Vikunja API trove — 5 sources collected including the full OpenAPI v2.2.0 spec (111 endpoints), official docs, filter API reference, and architecture overview
+
+### Supporting Changes
+- pytest `integration` marker configured; integration tests skip by default
+- `.gitleaksignore` added for false-positive JWT example in OpenAPI spec
+
 ## [0.1.0-alpha.1] - 2026-03-22
 
 ### Features

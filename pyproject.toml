@@ -1,6 +1,6 @@
 [project]
 name = "vk"
-version = "0.1.0a1"
+version = "0.1.0a2"
 description = "Vikunja CLI and MCP server"
 requires-python = ">=3.11"
 dependencies = [
