@@ -1,0 +1,2 @@
+# False positive: jwt.io example token in Vikunja's OpenAPI spec
+docs/troves/vikunja-api/sources/vikunja-openapi-spec/docs.json:jwt:8101
