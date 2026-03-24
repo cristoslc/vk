@@ -1,0 +1,113 @@
+---
+source-id: "vikunja-filter-api"
+title: "Vikunja Filter API Reference"
+type: web
+url: "https://vikunja.io/docs/filters"
+fetched: 2026-03-24T20:10:11Z
+hash: "c0c1def07cf6ab203ed0dd841e7ac5a5a723b9b9b200d0383622e0de667410d8"
+---
+
+# Filter API Reference
+
+This page covers the technical details of using Vikunja's filter syntax through the API.
+
+## Query parameters
+
+Filters are passed as query parameters when listing tasks. The key parameters are:
+
+| Parameter | Description |
+| --- | --- |
+| `filter` | The filter query string (e.g., `done = false && priority >= 3`) |
+| `filter_include_nulls` | When `true`, includes tasks where the filtered field has no value set. Default: `false`. |
+| `filter_timezone` | Timezone for resolving relative date expressions like `now`. Uses the server timezone if unset. |
+| `s` | Simple text search across task titles and descriptions. Cannot be combined with `filter`. |
+| `sort_by` | Field(s) to sort by (comma-separated). Options: `id`, `title`, `done`, `done_at`, `due_date`, `start_date`, `end_date`, `priority`, `percent_done`, `created`, `updated`, `position`. |
+| `order_by` | Sort direction(s) for each `sort_by` field: `asc` or `desc`. |
+| `per_page` | Number of results per page. |
+
+### Example API request
+
+```
+GET /api/v1/projects/1/views/5/tasks?filter=due_date%20%3C%20now%20%26%26%20done%20%3D%20false&sort_by=priority&order_by=desc
+```
+
+## Field names
+
+API filter queries use `snake_case` field names:
+
+| Web UI field | API field |
+| --- | --- |
+| `dueDate` | `due_date` |
+| `startDate` | `start_date` |
+| `endDate` | `end_date` |
+| `doneAt` | `done_at` |
+| `percentDone` | `percent_done` |
+| `done` | `done` |
+| `priority` | `priority` |
+| `assignees` | `assignees` |
+| `labels` | `labels` |
+| `project` | `project` |
+| `reminders` | `reminders` |
+| `created` | `created` |
+| `updated` | `updated` |
+
+## Labels and projects by ID
+
+Through the API, you must use numeric IDs:
+
+```
+labels in 1, 5
+project = 12
+```
+
+To look up label IDs, use `GET /api/v1/labels`. To look up project IDs, use `GET /api/v1/projects`.
+
+## Date math
+
+Each expression starts with an anchor date (`now` or a fixed date ending with `||`), followed by optional arithmetic:
+
+* `now+7d` — seven days from now
+* `now/d` — start of today (rounded down)
+* `now-1M/M` — start of last month
+* `2024-03-11||+1w` — one week after March 11, 2024
+
+### Time units
+
+| Unit | Meaning |
+| --- | --- |
+| `s` | Seconds |
+| `m` | Minutes |
+| `h` | Hours |
+| `d` | Days |
+| `w` | Weeks |
+| `M` | Months |
+| `y` | Years |
+
+## Saved filters API
+
+* `GET /api/v1/filters` — List all saved filters
+* `PUT /api/v1/filters` — Create a saved filter
+* `GET /api/v1/filters/{id}` — Get a specific saved filter
+* `POST /api/v1/filters/{id}` — Update a saved filter
+* `DELETE /api/v1/filters/{id}` — Delete a saved filter
+
+A saved filter object contains:
+
+```json
+{
+  "id": 1,
+  "title": "My urgent tasks",
+  "description": "",
+  "filters": {
+    "sort_by": ["due_date"],
+    "order_by": ["asc"],
+    "filter": "priority >= 3 && done = false",
+    "filter_include_nulls": false
+  },
+  "is_favorite": false,
+  "created": "2024-01-15T10:30:00Z",
+  "updated": "2024-01-15T10:30:00Z"
+}
+```
+
+Saved filters appear in task listing responses as pseudo-projects with negative IDs (e.g., project ID `-1` corresponds to saved filter ID `1`).

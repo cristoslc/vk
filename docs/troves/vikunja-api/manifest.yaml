@@ -1,0 +1,60 @@
+trove: vikunja-api
+created: 2026-03-24
+refreshed: 2026-03-24
+tags:
+  - vikunja
+  - api
+  - openapi
+  - rest
+  - task-management
+
+freshness-ttl:
+  web: 14d
+  documentation-site: 14d
+
+history:
+  - event: created
+    date: 2026-03-24
+    commit: "--"
+    sources: 5
+
+referenced-by: []
+
+sources:
+  - source-id: vikunja-openapi-spec
+    type: documentation-site
+    url: "http://localhost:3456/api/v1/docs.json"
+    fetched: 2026-03-24T20:10:11Z
+    title: "Vikunja API v2.2.0 — OpenAPI Specification"
+    hash: "cbe2833bf42e7be34cf9747f0dbc738a85dd1f8ce378aef82937581a12db7b23"
+    notes: "Full OpenAPI 2.0 spec with 111 paths and all model definitions, normalized to markdown. Raw JSON available at /api/v1/docs.json on any running instance."
+
+  - source-id: vikunja-api-docs
+    type: web
+    url: "https://vikunja.io/docs/api-documentation/"
+    fetched: 2026-03-24T20:10:11Z
+    title: "Vikunja API Documentation — Official"
+    hash: "728fe3e2f0bac81883726dd452a58f1980f4013d926400af4fda86e08a8145be"
+
+  - source-id: vikunja-filter-api
+    type: web
+    url: "https://vikunja.io/docs/filters"
+    fetched: 2026-03-24T20:10:11Z
+    title: "Vikunja Filter API Reference"
+    hash: "c0c1def07cf6ab203ed0dd841e7ac5a5a723b9b9b200d0383622e0de667410d8"
+    notes: "Filter syntax, field names, date math, saved filters API."
+
+  - source-id: deepwiki-overview
+    type: web
+    url: "https://deepwiki.com/go-vikunja/vikunja"
+    fetched: 2026-03-24T20:10:11Z
+    title: "Vikunja Architecture Overview — DeepWiki"
+    hash: "2b4ac9ae3dc08f00abcdf65771890f131965cbbf148f5b535a63309361942354"
+
+  - source-id: deepwiki-api-design-patterns
+    type: web
+    url: "https://deepwiki.com/go-vikunja/vikunja/7.1-api-design-patterns"
+    fetched: 2026-03-24T20:10:11Z
+    title: "Vikunja API Design Patterns — DeepWiki"
+    hash: "af0e7fcccb913d7b8c9ec54994ae6b3d9ad8c9113041e6c32c01c3343bd3ae4c"
+    notes: "HTTP method conventions (PUT=create, POST=update), pagination, error codes, rate limiting, auth patterns."
