@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.0-alpha.3] - 2026-03-25
+
+### Features
+
+#### Bucket delete
+
+`vk bucket delete <project> <bucket>` removes buckets from kanban views. Supports name or ID resolution, confirmation prompt (skip with `--force`), and `--view` for non-default views. Also available as the `vk_bucket_delete` MCP tool. Closes #2.
+- Date-only `--due` values (e.g. `2026-03-25`) are now normalized to full ISO-8601 datetime before sending to the API, fixing HTTP 400 errors. Applies to both task create and update. Closes #1.
+
 ## [0.1.0-alpha.2] - 2026-03-24
 
 ### Features
