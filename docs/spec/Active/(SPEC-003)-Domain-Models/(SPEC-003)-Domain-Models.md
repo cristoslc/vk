@@ -14,7 +14,7 @@ linked-artifacts:
   - SPEC-001
 depends-on-artifacts: []
 addresses: []
-evidence-pool: "task-platform-comparison@62bd18a"
+trove: "task-platform-comparison@62bd18a"
 source-issue: ""
 swain-do: required
 ---

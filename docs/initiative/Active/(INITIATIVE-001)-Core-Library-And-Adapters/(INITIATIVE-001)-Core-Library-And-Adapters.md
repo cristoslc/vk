@@ -17,7 +17,7 @@ success-criteria:
   - "Test suite covers core services with mocked HTTP"
 depends-on-artifacts: []
 addresses: []
-evidence-pool: "task-platform-comparison@62bd18a"
+trove: "task-platform-comparison@62bd18a"
 ---
 
 # Core Library and Adapters

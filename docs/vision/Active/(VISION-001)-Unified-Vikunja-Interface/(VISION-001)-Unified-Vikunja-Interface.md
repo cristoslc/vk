@@ -9,7 +9,7 @@ created: 2026-03-22
 last-updated: 2026-03-22
 priority-weight: high
 depends-on-artifacts: []
-evidence-pool: "task-platform-comparison@62bd18a"
+trove: "task-platform-comparison@62bd18a"
 ---
 
 # Unified Vikunja Interface

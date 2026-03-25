@@ -19,7 +19,7 @@ depends-on-artifacts:
   - SPEC-004
   - SPEC-005
 addresses: []
-evidence-pool: ""
+trove: ""
 source-issue: ""
 swain-do: required
 ---

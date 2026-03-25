@@ -17,7 +17,7 @@ success-criteria:
   - "Test suite passes with mocked HTTP (no live Vikunja required)"
 depends-on-artifacts: []
 addresses: []
-evidence-pool: "task-platform-comparison@62bd18a"
+trove: "task-platform-comparison@62bd18a"
 ---
 
 # MVP Implementation

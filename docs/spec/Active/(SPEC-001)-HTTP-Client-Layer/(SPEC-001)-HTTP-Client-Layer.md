@@ -13,7 +13,7 @@ parent-initiative: ""
 linked-artifacts: []
 depends-on-artifacts: []
 addresses: []
-evidence-pool: "task-platform-comparison@62bd18a"
+trove: "task-platform-comparison@62bd18a"
 source-issue: ""
 swain-do: required
 ---
