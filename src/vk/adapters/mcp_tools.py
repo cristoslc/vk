@@ -148,6 +148,19 @@ def register_tools(server: Server, config: Config) -> None:
                 },
             ),
             Tool(
+                name="vk_bucket_delete",
+                description="Delete a bucket from a project view",
+                inputSchema={
+                    "type": "object",
+                    "properties": {
+                        "project_id": {"type": "integer"},
+                        "view_id": {"type": "integer"},
+                        "bucket_id": {"type": "integer"},
+                    },
+                    "required": ["project_id", "view_id", "bucket_id"],
+                },
+            ),
+            Tool(
                 name="vk_comment_list",
                 description="List comments on a task",
                 inputSchema={
@@ -239,6 +252,7 @@ def register_tools(server: Server, config: Config) -> None:
             "vk_task_delete": lambda: _task_delete(client, arguments),
             "vk_bucket_list": lambda: _bucket_list(client, arguments),
             "vk_bucket_create": lambda: _bucket_create(client, arguments),
+            "vk_bucket_delete": lambda: _bucket_delete(client, arguments),
             "vk_comment_list": lambda: _comment_list(client, arguments),
             "vk_comment_add": lambda: _comment_add(client, arguments),
             "vk_attach_list": lambda: _attach_list(client, arguments),
@@ -337,6 +351,13 @@ def _bucket_create(client: VikunjaClient, args: dict) -> dict:
     return BucketService(client).create(
         args["project_id"], args["title"], args["view_id"]
     ).to_dict()
+
+
+def _bucket_delete(client: VikunjaClient, args: dict) -> dict:
+    BucketService(client).delete(
+        args["project_id"], args["view_id"], args["bucket_id"]
+    )
+    return {"deleted": True}
 
 
 def _comment_list(client: VikunjaClient, args: dict) -> list[dict]:

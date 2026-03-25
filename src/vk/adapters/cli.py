@@ -239,6 +239,32 @@ def bucket_create(
     click.echo(format_bucket(b, as_json))
 
 
+@bucket.command("delete")
+@click.argument("project_name")
+@click.argument("bucket_name")
+@click.option("--view", default=None, help="View name")
+@click.option("--force", is_flag=True, help="Skip confirmation")
+@pass_config
+def bucket_delete(
+    config: Config,
+    project_name: str,
+    bucket_name: str,
+    view: str | None,
+    force: bool,
+) -> None:
+    """Delete a bucket."""
+    client = _make_client(config)
+    cache = NameCache()
+    project_id = _resolve_project(project_name, client, cache)
+    view_id = _get_view_id(project_id, client, config, view)
+    bucket_id = _resolve_bucket(bucket_name, project_id, view_id, client, cache)
+    if not force:
+        click.confirm(f"Delete bucket '{bucket_name}'?", abort=True)
+    svc = BucketService(client)
+    svc.delete(project_id, view_id, bucket_id)
+    click.echo(f"Bucket '{bucket_name}' deleted.")
+
+
 # --- Tasks ---
 
 

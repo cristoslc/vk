@@ -230,6 +230,21 @@ class TestBuckets:
         buckets = bucket_svc.list(test_project.id, kanban.id)
         assert isinstance(buckets, list)
 
+    def test_create_and_delete_bucket(
+        self, bucket_svc: BucketService, test_project
+    ) -> None:
+        try:
+            kanban = bucket_svc.get_kanban_view(test_project.id)
+        except ValueError:
+            pytest.skip("No kanban view on test project")
+        bucket = bucket_svc.create(test_project.id, _unique("tmpbucket"), kanban.id)
+        assert bucket.id > 0
+        bucket_svc.delete(test_project.id, kanban.id, bucket.id)
+        # Verify it's gone
+        remaining = bucket_svc.list(test_project.id, kanban.id)
+        ids = [b.id for b in remaining]
+        assert bucket.id not in ids
+
 
 class TestAttachments:
     def test_upload_list_download(

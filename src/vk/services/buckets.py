@@ -41,3 +41,10 @@ class BucketService:
             json={"title": title},
         )
         return Bucket.from_api(data)
+
+    def delete(
+        self, project_id: int, view_id: int, bucket_id: int
+    ) -> None:
+        self.client.delete(
+            f"/projects/{project_id}/views/{view_id}/buckets/{bucket_id}"
+        )
