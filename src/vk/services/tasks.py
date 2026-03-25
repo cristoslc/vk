@@ -2,8 +2,19 @@
 
 from __future__ import annotations
 
+import re
+
 from vk.client import VikunjaClient
 from vk.models import Task
+
+_DATE_ONLY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def _normalize_due_date(value: str | None) -> str | None:
+    """Ensure date-only strings become full ISO-8601 datetimes."""
+    if value and _DATE_ONLY.match(value):
+        return f"{value}T00:00:00Z"
+    return value
 
 
 class TaskService:
@@ -40,7 +51,7 @@ class TaskService:
     ) -> Task:
         body: dict = {"title": title}
         if due_date:
-            body["due_date"] = due_date
+            body["due_date"] = _normalize_due_date(due_date)
         if priority is not None:
             body["priority"] = priority
         if description:
@@ -67,7 +78,7 @@ class TaskService:
         if priority is not None:
             body["priority"] = priority
         if due_date is not None:
-            body["due_date"] = due_date
+            body["due_date"] = _normalize_due_date(due_date)
         if description is not None:
             body["description"] = description
         data = self.client.post(f"/tasks/{task_id}", json=body)

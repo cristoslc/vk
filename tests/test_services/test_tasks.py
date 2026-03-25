@@ -5,7 +5,7 @@ from __future__ import annotations
 import responses
 
 from vk.client import VikunjaClient
-from vk.services.tasks import TaskService
+from vk.services.tasks import TaskService, _normalize_due_date
 
 import pytest
 
@@ -89,6 +89,39 @@ class TestTaskCRUD:
             status=204,
         )
         task_service.delete(1)  # Should not raise
+
+
+class TestDueDateNormalization:
+    def test_date_only_gets_time_suffix(self) -> None:
+        assert _normalize_due_date("2026-03-25") == "2026-03-25T00:00:00Z"
+
+    def test_full_datetime_passes_through(self) -> None:
+        assert _normalize_due_date("2026-03-25T14:30:00Z") == "2026-03-25T14:30:00Z"
+
+    def test_none_passes_through(self) -> None:
+        assert _normalize_due_date(None) is None
+
+    @responses.activate
+    def test_create_normalizes_due_date(self, task_service: TaskService) -> None:
+        responses.add(
+            responses.PUT,
+            f"{BASE_URL}/api/v1/projects/1/tasks",
+            json={"id": 10, "title": "Due task", "due_date": "2026-03-25T00:00:00Z"},
+        )
+        task_service.create(title="Due task", project_id=1, due_date="2026-03-25")
+        body = responses.calls[0].request.body
+        assert b"2026-03-25T00:00:00Z" in body
+
+    @responses.activate
+    def test_update_normalizes_due_date(self, task_service: TaskService) -> None:
+        responses.add(
+            responses.POST,
+            f"{BASE_URL}/api/v1/tasks/1",
+            json={"id": 1, "title": "Task", "due_date": "2026-03-25T00:00:00Z"},
+        )
+        task_service.update(1, due_date="2026-03-25")
+        body = responses.calls[0].request.body
+        assert b"2026-03-25T00:00:00Z" in body
 
 
 class TestTaskMove:

@@ -153,6 +153,25 @@ class TestTasks:
         assert fetched.priority == 3
         assert fetched.description == "A test description"
 
+    def test_create_with_date_only_due_date(
+        self, task_svc: TaskService, test_project
+    ) -> None:
+        """Regression test for gh#1: date-only --due values cause HTTP 400."""
+        task = task_svc.create(
+            title=_unique("due-date"),
+            project_id=test_project.id,
+            due_date="2026-03-25",
+        )
+        fetched = task_svc.get(task.id)
+        assert fetched.due_date is not None
+
+    def test_update_with_date_only_due_date(
+        self, task_svc: TaskService, test_project
+    ) -> None:
+        task = task_svc.create(title=_unique("upd-due"), project_id=test_project.id)
+        updated = task_svc.update(task.id, due_date="2026-04-01")
+        assert updated.due_date is not None
+
     def test_delete_task(self, task_svc: TaskService, test_project) -> None:
         task = task_svc.create(title=_unique("del"), project_id=test_project.id)
         task_svc.delete(task.id)
