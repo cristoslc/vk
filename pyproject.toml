@@ -14,7 +14,7 @@ vk = "vk.adapters.cli:cli"
 
 [dependency-groups]
 dev = [
-    "pytest>=9.0",
+    "pytest>=9.0.3",
     "responses>=0.25",
 ]
 
